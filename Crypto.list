@@ -1,8 +1,10 @@
 # > CryptoCurrency
+HOST-SUFFIX,app-measurement.com,CryptoCurrency
 HOST-SUFFIX,bybit.com,CryptoCurrency
 HOST-SUFFIX,okx.com,CryptoCurrency
 HOST-SUFFIX,bntrace.com,CryptoCurrency
 HOST-SUFFIX,binance.com,CryptoCurrency
+HOST-SUFFIX,bnbstatic.com,CryptoCurrency
 HOST-SUFFIX,binance.info,CryptoCurrency
 HOST-SUFFIX,bitget.com,CryptoCurrency
 # CryptoCurrency
