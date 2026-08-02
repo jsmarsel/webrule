@@ -1,0 +1,340 @@
+proxy-providers:
+  provider-1:
+    type: http
+    url: REPLACE_WITH_YOUR_PROVIDER_SUBSCRIPTION_URL
+    path: ./providers/proxy/provider-1.yaml
+    interval: 21600
+    proxy: DIRECT
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      timeout: 5000
+      lazy: true
+      expected-status: 204
+    override:
+      additional-prefix: "[P1] "
+
+rule-providers:
+  ads-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs
+    path: ./providers/rules/ads-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  private-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs
+    path: ./providers/rules/private-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  private-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs
+    path: ./providers/rules/private-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  cn-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs
+    path: ./providers/rules/cn-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  cn-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
+    path: ./providers/rules/cn-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  ai-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs
+    path: ./providers/rules/ai-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  youtube-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs
+    path: ./providers/rules/youtube-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  netflix-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs
+    path: ./providers/rules/netflix-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  netflix-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs
+    path: ./providers/rules/netflix-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  google-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs
+    path: ./providers/rules/google-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  google-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs
+    path: ./providers/rules/google-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  telegram-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs
+    path: ./providers/rules/telegram-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  telegram-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs
+    path: ./providers/rules/telegram-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  twitter-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs
+    path: ./providers/rules/twitter-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  twitter-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs
+    path: ./providers/rules/twitter-ip.mrs
+    interval: 86400
+    proxy: PROXY
+
+  github-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs
+    path: ./providers/rules/github-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  spotify-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs
+    path: ./providers/rules/spotify-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  microsoft-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs
+    path: ./providers/rules/microsoft-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+  apple-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs
+    path: ./providers/rules/apple-domain.mrs
+    interval: 86400
+    proxy: PROXY
+
+proxy-groups:
+  - name: PROXY
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: AUTO
+    type: url-test
+    use:
+      - provider-1
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    timeout: 5000
+    lazy: true
+    expected-status: 204
+
+  - name: FALLBACK
+    type: fallback
+    use:
+      - provider-1
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    timeout: 5000
+    lazy: true
+    expected-status: 204
+
+  - name: AI
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: YouTube
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Netflix
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Google
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Telegram
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Twitter
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: GitHub
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Spotify
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - PROXY
+      - AUTO
+      - FALLBACK
+      - DIRECT
+
+  - name: Microsoft
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - DIRECT
+      - PROXY
+      - AUTO
+      - FALLBACK
+
+  - name: Apple
+    type: select
+    use:
+      - provider-1
+    proxies:
+      - DIRECT
+      - PROXY
+      - AUTO
+      - FALLBACK
+
+rules:
+  - RULE-SET,ads-domain,REJECT
+  - RULE-SET,private-domain,DIRECT
+  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,ai-domain,AI
+  - RULE-SET,youtube-domain,YouTube
+  - RULE-SET,netflix-domain,Netflix
+  - RULE-SET,google-domain,Google
+  - RULE-SET,telegram-domain,Telegram
+  - RULE-SET,twitter-domain,Twitter
+  - RULE-SET,github-domain,GitHub
+  - RULE-SET,spotify-domain,Spotify
+  - RULE-SET,microsoft-domain,Microsoft
+  - RULE-SET,apple-domain,Apple
+  - RULE-SET,netflix-ip,Netflix,no-resolve
+  - RULE-SET,google-ip,Google,no-resolve
+  - RULE-SET,telegram-ip,Telegram,no-resolve
+  - RULE-SET,twitter-ip,Twitter,no-resolve
+  - RULE-SET,cn-domain,DIRECT
+  - RULE-SET,cn-ip,DIRECT,no-resolve
+  - MATCH,PROXY
